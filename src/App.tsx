@@ -1,9 +1,18 @@
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import './App.css'
+import { merge } from 'lodash-es'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [value, setValue] = useState({
+    a: {
+      b: {
+        c: 1,
+        d: 0,
+      },
+      c: 2,
+    },
+  })
 
   return (
     <div className='App'>
@@ -17,7 +26,17 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className='card'>
-        <button onClick={() => setCount(count => count + 1)}>count is {count}</button>
+        <button
+          onClick={() =>
+            setValue(prevValue =>
+              merge({}, prevValue, {
+                a: { b: { c: prevValue.a.b.c + 1 } },
+              }),
+            )
+          }
+        >
+          count is {value.a.b.c}
+        </button>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
